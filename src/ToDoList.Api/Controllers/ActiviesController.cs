@@ -16,6 +16,8 @@ public class ActiviesController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [ProducesResponseType(typeof(ActivityResponseDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken = default)
     {
         var result = await _useCase.GetById(id, cancellationToken);
@@ -27,6 +29,7 @@ public class ActiviesController : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(typeof(ActivityResponseDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Get([FromQuery]int page = 1, [FromQuery]int size = 20, CancellationToken cancellationToken = default)
     {
         var result = await _useCase.Get(default, page, size, cancellationToken);
@@ -35,6 +38,8 @@ public class ActiviesController : ControllerBase
     }
 
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Post([FromBody] ActivyRequestDto model, CancellationToken cancellationToken = default)
     {
         var activy = (Model.Activity)model;
@@ -48,6 +53,9 @@ public class ActiviesController : ControllerBase
     }
 
     [HttpPost("{id}/next-status")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> NextStatus(Guid id, CancellationToken cancellationToken = default)
     {
         var activity = await _useCase.NextStatus(id, cancellationToken);
@@ -62,6 +70,9 @@ public class ActiviesController : ControllerBase
     }
 
     [HttpPost("{id}/cancel")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Cancel(Guid id, CancellationToken cancellationToken = default)
     {
         var activity = await _useCase.Cancel(id, cancellationToken);

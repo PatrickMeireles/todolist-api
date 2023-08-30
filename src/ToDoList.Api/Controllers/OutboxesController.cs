@@ -16,6 +16,7 @@ public class OutboxesController : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<OutboxResponseDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> Get([FromQuery] int page = 1, [FromQuery] int size = 20, CancellationToken cancellationToken = default)
     {
         var result = await _usecase.Get(c => c != null, page, size, cancellationToken: cancellationToken);
