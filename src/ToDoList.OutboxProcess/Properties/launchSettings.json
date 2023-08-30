@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "ToDoList.OutboxProcess": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7006"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "httpPort": 32245,
+      "useSSL": false
+    }
+  }
+}

@@ -1,0 +1,27 @@
+version: '3.6'
+services: 
+
+    api:
+        image: docker.io/patrick-amorim/todolist-api:latest
+        hostname: api
+        environment:
+          ASPNETCORE_ENVIRONMENT: Development
+          ConnectionStrings__DB: Server=postgres;Port=5432;User ID=postgres;Password=admin;Database=postgres
+          Operations__TasksDelaysMinutes: 5
+          Operations__OutboxProcessMinutes: 5
+        depends_on:
+          - postgres
+        build: .
+        ports:
+          - "8090:80"
+      
+    postgres:
+        image: postgres
+        restart: always
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=admin
+        ports: 
+            - "5432:5432"
+        volumes: 
+            - ./init/docker_postgres_init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
